@@ -16,12 +16,25 @@
 }
 
 .cell-title {
+  flex: none;
   display: flex;
   align-items: center;
   margin-right: 10rpx;
 }
 
 .form__cell__btn {
-  transform: translate(-20rpx, 6rpx);
+  flex: none;
   margin-left: 30rpx;
+}
+
+.cell-content__input {
+  flex: 1;
+  width: 1px;
+}
+
+.cell-content-container {
+  height: 80rpx;
+  padding: 0 20rpx;
+  display: flex;
+  align-items: center;
 }

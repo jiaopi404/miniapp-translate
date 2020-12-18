@@ -3,6 +3,7 @@
 const CryptoJs = require('crypto-js');
 import * as Util from '../../utils/util';
 import Http from '../../utils/http'
+import { YouDaoResp } from '../../types/youdao'
 
 Page({
 
@@ -10,37 +11,46 @@ Page({
    * 页面的初始数据
    */
   data: {
-    inputValue: '',
+    languageFlag: false,
     formData: {
       content: '18629287141'
-    }
+    },
+    translateData: {}
   },
 
   /**
    * 表单输入 change handler
    * @param event
    */
-  formInputChange (event) {
+  formInputChange (event: { detail: { value: string; }; }) {
     this.setData({
       formData: {
         content: event.detail.value
       }
-    })
+    });
+  },
+
+  /**
+   * 点击切换语言
+   */
+  handleSwitchLanguage () {
+    this.setData({
+      languageFlag: !this.data.languageFlag
+    });
   },
 
   bindTranslate () {
     console.log('input value: ', this.data.formData.content);
-    this.queryToYouDao({ query: this.data.formData.content })
+    this.queryToYouDao(this.data.formData.content)
   },
 
-  queryToYouDao ({ query } ) {
-    console.log('Util is: ', Util)
+  queryToYouDao (query:string) {
     const appKey = '7dd76978737827f8';
     const key = 'LaAhd9Me9A6LFKuuOmidRjaDbTUkYvpX';
     const salt = Util.getUUid();
     const curtime = Math.round(+new Date() / 1000) + '';
-    const from = 'zh-CHS';
-    const to = 'en';
+    const from = this.data.languageFlag ? 'en' : 'zh-CHS';
+    const to = this.data.languageFlag ? 'zh-CHS' : 'en';
     const str1 = appKey + Util.truncate(query) + salt + curtime + key;
     const sign = CryptoJs.SHA256(str1).toString(CryptoJs.enc.Hex);
 
@@ -55,10 +65,13 @@ Page({
         to,
         sign,
         signType: 'v3',
-        curtime
+        curtime,
+        strict: 'true'
       }
-    }).then(res => {
-      console.log('res of get from you dao is: ', res)
+    }).then((res:YouDaoResp) => {
+      this.setData({
+        translateData: res
+      })
     }).catch(err => {
       console.log('err is: ', err)
     })
@@ -68,7 +81,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function () {
 
   },
 
@@ -111,13 +124,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
   }
 })

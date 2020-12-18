@@ -2,16 +2,21 @@
 <view class="page-translate">
   <mp-form id="form" models="{{formData}}">
     <mp-cells footer="支持汉英互译">
-      <mp-cell prop="content" ext-class=" weui-cell_vcode">
-        <view slot="title" class="cell-title">
-          <text>汉</text>
-          <view class="cell-input-box cus-rotate--90">
-            <text class="iconfont iconsorting"></text></view>
-          <text>英</text>
+      <mp-cell prop="content" ext-class="weui-cell_vcode">
+        <view class="cell-content-container">
+          <view slot="title" class="cell-title" bindtap="handleSwitchLanguage">
+            <text>{{ languageFlag ? '英' : '汉' }}</text>
+            <view class="cell-input-box cus-rotate--90">
+              <text class="iconfont iconsorting"></text></view>
+            <text>{{ languageFlag ? '汉' : '英' }}</text>
+          </view>
+          <input bindinput="formInputChange" data-field="mobile" class="weui-input cell-content__input" placeholder="请输入内容" />
+          <button size="mini" type="primary" slot="footer" class="form__cell__btn" bindtap="bindTranslate">go!</button>
         </view>
-        <input bindinput="formInputChange" data-field="mobile" class="weui-input" placeholder="请输入内容" />
-        <button size="mini" type="primary" slot="footer" class="form__cell__btn" bindtap="bindTranslate">go!</button>
       </mp-cell>
     </mp-cells>
   </mp-form>
+  <view class="translate-content__container">
+    <view class="translate-content__title">{{ translateData.query || '空的' }}</view>
+  </view>
 </view>
