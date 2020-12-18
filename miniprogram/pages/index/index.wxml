@@ -8,7 +8,6 @@
     </block>
   </view>
   <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
     <button bindtap="bindToTranslate">去翻译</button>
   </view>
 </view>
