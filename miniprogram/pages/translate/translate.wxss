@@ -1,0 +1,27 @@
+/* miniprogram/pages/translate/translate.wxss */
+.page-translate__input-con {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.cus-rotate--90 {
+  transform: rotate(90deg);
+}
+
+.iconfont.iconsorting {
+  color: #ff3040;
+}
+
+.cell-input-box {
+}
+
+.cell-title {
+  display: flex;
+  align-items: center;
+  margin-right: 10rpx;
+}
+
+.form__cell__btn {
+  transform: translate(-20rpx, 6rpx);
+  margin-left: 30rpx;
+}
