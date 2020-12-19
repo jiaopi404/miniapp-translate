@@ -5,7 +5,7 @@ export interface RequestOptions { // 请求体
 }
 export interface ResponseContext { // 响应体
     cookies?: Array<Object>
-    data: Object
+    data: any
     errMsg: string
     header: Object
     statusCode: number

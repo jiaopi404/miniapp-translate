@@ -1,7 +1,7 @@
 import { RequestOptions, ResponseContext } from '../types/http';
 
 export default {
-  request (option:RequestOptions) {
+  request (option:RequestOptions):Promise<any> {
     return new Promise((resolve:Function, reject:Function) => {
       wx.request({
         url: option.url,
