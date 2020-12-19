@@ -26,14 +26,14 @@ export interface WebDictUrl {
 }
 
 export interface BasicParaphrase {
-  exam_type: Array<string>
-  phonetic: string
-  'uk-phonetic': string
-  'us-phonetic': string
-  'uk-speech': string
-  'us-speech': string
-  explains: Array<string>
-  wfs: Array<{
+  exam_type?: Array<string> // 考试词汇类型
+  phonetic?: string // 发音
+  'uk-phonetic'?: string // 英语发音
+  'us-phonetic'?: string // 美语发音
+  'uk-speech'?: string // 英语发音, 语音
+  'us-speech'?: string // 美语发音, 语音
+  explains: Array<string> // 解释
+  wfs?: Array<{ //
     wf: {
       name: string
       value: string

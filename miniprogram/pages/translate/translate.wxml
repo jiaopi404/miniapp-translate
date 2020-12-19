@@ -1,5 +1,5 @@
 <!--miniprogram/pages/translate/translate.wxml-->
-<view class="page-translate">
+<view class="page-translate page">
   <mp-form id="form" models="{{formData}}">
     <mp-cells footer="支持汉英互译">
       <mp-cell prop="content" ext-class="weui-cell_vcode">
@@ -10,13 +10,84 @@
               <text class="iconfont iconsorting"></text></view>
             <text>{{ languageFlag ? '汉' : '英' }}</text>
           </view>
-          <input bindinput="formInputChange" data-field="mobile" class="weui-input cell-content__input" placeholder="请输入内容" />
+          <input bindinput="formInputChange" data-field="mobile" class="weui-input cell-content__input" maxlength="40" placeholder="请输入内容" />
           <button size="mini" type="primary" slot="footer" class="form__cell__btn" bindtap="bindTranslate">go!</button>
         </view>
       </mp-cell>
     </mp-cells>
   </mp-form>
   <view class="translate-content__container">
-    <view class="translate-content__title">{{ translateData.query || '空的' }}</view>
+    <view class="translate-content__title font-size--36">{{ translateData.query }}</view>
+    <block wx:if="{{ !translateData.isWord }}">
+<!--      非 word, 展示翻译-->
+      <view class="translate-content__translation">{{ translateData.translation }}</view>
+    </block>
+    <block wx:if="{{ translateData.isWord }}">
+<!--      发音 普通发音-->
+      <view class="translate-content__phonetic-box translate-content__phonetic" wx:if="{{ translateData.basic.phonetic && !(translateData.basic['uk-phonetic'] || translateData.basic['us-phonetic']) }}">
+        [{{ translateData.basic.phonetic }}]
+      </view>
+<!--      发音 英语 发音-->
+      <view class="translate-content__en-phonetic-box translate-content__phonetic" wx:if="{{ translateData.basic['uk-phonetic'] && translateData.basic['us-phonetic'] }}">
+        英
+        <text data-speech="{{ translateData.basic['uk-speech'] }}" bindtap="bindPlayPhonetic">播放</text>
+        [{{ translateData.basic['uk-phonetic'] }}]
+        美
+        <text data-speech="{{ translateData.basic['us-speech'] }}" bindtap="bindPlayPhonetic">播放</text>
+        [{{ translateData.basic['us-phonetic'] }}]
+      </view>
+      <!--      解释-->
+      <view class="translate-content__explains-box">
+        <view
+          class="translate-content__explains-item"
+          wx:for="{{ translateData.basic.explains }}"
+          wx:key="*this"
+        >
+          {{ item }}
+        </view>
+      </view>
+<!--      变形-->
+      <view class="translate-content__wfs-box" wx:if="{{ translateData.basic.wfs }}">
+        <view class="translate-content__wfs-label">形态变化: </view>
+        <view class="translate-content__wfs-list">
+          <view
+            class="translate-content__wfs-item"
+            wx:for="{{ translateData.basic.wfs }}"
+          >{{ item.wf.name }}: {{ item.wf.value }}</view>
+        </view>
+      </view>
+      <!--      考试类型-->
+      <view class="translate-content__exam-box" wx:if="{{ translateData.basic.exam_type }}">
+        <view class="translate-content__exam-label">
+          考试类型:
+        </view>
+        <view class="translate-content__exam-type-box">
+          <text
+            class="translate-content__exam-type-item"
+            wx:for="{{ translateData.basic.exam_type }}"
+            wx:key="*this"
+          >{{ item }}</text>
+        </view>
+      </view>
+<!--      网络释义-->
+      <view class="translate-content__web-explain-box" wx:if="{{ translateData.web }}">
+        <view class="translate-content__web-explain-label">网络释义:</view>
+        <view class="translate-content__web-explain-list">
+          <view
+            class="translate-content__web-explain-item"
+            wx:for="{{ translateData.web }}"
+            wx:key="key"
+          >
+            <text class="translate-content__web-explain-item__label">{{ item.key }}:</text>
+            <text
+              class="translate-content__web-explain-item__content"
+              wx:for="{{ item.value }}"
+              wx:key="*this"
+              wx:for-item="contentValue"
+            >{{ contentValue }}</text>
+          </view>
+        </view>
+      </view>
+    </block>
   </view>
 </view>

@@ -9,3 +9,30 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 }
+
+.page {
+  color: #333;
+  font-size: 28rpx;
+}
+
+.font-size--24 {
+  font-size: 24rpx;
+}
+.font-size--28 {
+  font-size: 28rpx;
+}
+.font-size--32 {
+  font-size: 32rpx;
+}
+.font-size--36 {
+  font-size: 36rpx;
+}
+.font-size--40 {
+  font-size: 40rpx;
+}
+.text-color--middle {
+  color: #666;
+}
+.text-color--lighter {
+  color: #999;
+}

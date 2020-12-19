@@ -43,7 +43,29 @@ Page({
     console.log('input value: ', this.data.formData.content);
     this.queryToYouDao(this.data.formData.content)
   },
+  /**
+   * 播放发音
+   * @param event
+   */
+  bindPlayPhonetic (event: any) {
+    const { speech: speechUrl } = event.currentTarget.dataset
+    console.log('speechUrl is: ', speechUrl)
+    const innerAudioContext = wx.createInnerAudioContext()
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = speechUrl
+    innerAudioContext.onPlay(() => {
+      console.log('开始播放')
+    })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+  },
 
+  /**
+   * 向 openAPI 进行请求
+   * @param query
+   */
   queryToYouDao (query:string) {
     const appKey = '7dd76978737827f8';
     const key = 'LaAhd9Me9A6LFKuuOmidRjaDbTUkYvpX';

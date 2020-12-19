@@ -38,3 +38,15 @@
   display: flex;
   align-items: center;
 }
+/* container */
+.translate-content__container {
+  padding: 0 20rpx;
+}
+/* title */
+.translate-content__title {
+}
+
+/*phonetic 发音*/
+.translate-content__phonetic {
+  font-style: italic;
+}
