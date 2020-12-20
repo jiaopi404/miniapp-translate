@@ -41,6 +41,7 @@ Page({
 
   bindTranslate () {
     console.log('input value: ', this.data.formData.content);
+    wx.showLoading({ title: '加载中' })
     this.queryToYouDao(this.data.formData.content)
   },
   /**
@@ -77,7 +78,7 @@ Page({
     const sign = CryptoJs.SHA256(str1).toString(CryptoJs.enc.Hex);
 
     Http.request({
-      url: 'http://openapi.youdao.com/api',
+      url: 'https://openapi.youdao.com/api',
       method: 'POST',
       data: {
         q: query,
@@ -94,8 +95,10 @@ Page({
       this.setData({
         translateData: res
       })
+      wx.hideLoading()
     }).catch(err => {
       console.log('err is: ', err)
+      wx.hideLoading()
     })
   },
 
